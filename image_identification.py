@@ -1,15 +1,9 @@
-
-# coding: utf-8
-
-# In[8]:
-
-
 import numpy as np
 import cv2
 import os
 import random
 files = os.listdir("letters")
-#print (files)
+
 
 x_train = []
 y_train = []
@@ -88,13 +82,11 @@ for f in files:
 
 x_train = np.array(x_train)
 x_train = x_train.reshape(-1, 128, 128, 1)
-#print('x: ', x_train)
-#print('y: ',y_train)
+
 
 x_test = np.array(x_test)
 x_test = x_test.reshape(-1, 128, 128, 1)
-#print('x: ', x_test)
-#print('y: ',y_test)
+
 
 
 
@@ -160,21 +152,6 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 
-'''
-files = os.listdir("jpg")
-x_test = []
-y_test = []
-
-for f in files:
-    y_test.append(int(f.split('-')[1].split('.')[0]))
-    tmp = cv2.imread('jpg1/'+f, cv2.IMREAD_GRAYSCALE)
-    tmp = cv2.resize(tmp, (128, 128), interpolation=cv2.INTER_CUBIC)
-    x_test.append(tmp.astype('float32')/255)
-x_test = np.array(x_test)
-x_test = x_test.reshape(-1, 128, 128, 1)
-y_test = keras.utils.to_categorical(y_test, num_classes=num_classes+1, dtype='int8')
-'''
-
 
 model.fit(x_train, y_train,
           batch_size=batch_size,
@@ -187,9 +164,3 @@ scores = model.evaluate(x_test, y_test, verbose=1)
 print('Test loss:', scores[0])
 print('Test accuracy:', scores[1])
 ans = model.predict(x_test)
-
-'''
-for i in range(len(ans)):
-    print(ans[i], y_test[i])
-'''
-
